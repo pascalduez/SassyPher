@@ -1,0 +1,58 @@
+
+// SassyPher
+// Convertion: Gray code
+// ---------------------
+
+
+// Gray code (reflected binary code)
+// https://en.wikipedia.org/wiki/Gray_code
+// ---------------------------------------
+
+
+// Convert an unsigned binary string (natural binary code)
+// to a Gray code string (reflected binary code).
+// --------
+// @param [string] $str
+// --------
+// @return [string]
+
+@function binary-to-gray(
+  $str
+) {
+  $num: parse-int($str, 2);
+  $num: bw(bw($num '>>' 1) '^' $num);
+  @return to-string($num, 2);
+};
+
+
+// Convert a Gray code string (reflected binary code)
+// to an unsigned binary string (natural binary code).
+// --------
+// @param [string] $str
+// --------
+// @return [string]
+
+@function gray-to-binary(
+  $str
+) {
+  $gray: ();
+  $bin: ();
+  $result: '';
+
+  @for $i from 1 through str-length($str) {
+    $gray: append($gray, bit(str-slice($str, $i, $i)));
+  }
+
+  $bin: append($bin, nth($gray, 1));
+
+  @for $i from 2 through length($gray) {
+    $bin: append($bin, bw(nth($gray, $i) '^' nth($bin, $i - 1)));
+  }
+
+  // Concatenate into a string.
+  @each $bit in $bin {
+    $result: $result + $bit;
+  }
+
+  @return $result;
+};

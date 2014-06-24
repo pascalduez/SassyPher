@@ -1,0 +1,99 @@
+
+// SassyPher
+// Cipher: ROT
+// -----------
+
+
+// ROT 5 encoder/decoder.
+// --------
+// @param [string] $message
+// @param [number] $shift
+// @param [string] $op: encrypt | decrypt
+// --------
+// @return [string]
+
+@function rot5(
+  $message,
+  $shift: 5,
+  $op: 'encrypt'
+) {
+  @if type-of($message) != string {
+    @warn '`$message` must be a string, #{type-of($message)} given.';
+  }
+  @if type-of($shift) != number {
+    @warn '`$shift` must be a number, #{type-of($shift)} given.';
+  }
+  @if not in-range(0, 9, abs($shift)) {
+    @warn '`$shift` must in range [0-9].';
+  }
+
+  $charset: numeric;
+  $result: '';
+
+  @if $op == 'decrypt' {
+   $shift: (10 - $shift);
+  }
+
+  @for $i from 1 through str-length($message) {
+    $code: char-code-at($message, $i, $charset);
+
+    @if $code {
+      $shifted: ((($code - 1) + $shift) % 10) + 1;
+      $result: $result + from-char-code($shifted, $charset);
+    }
+    @else {
+      // Non [0-9] char.
+      $result: $result + char-at($message, $i);
+    }
+  }
+
+  @return $result;
+}
+
+
+// ROT 13 encoder/decoder.
+// --------
+// @param [string] $message
+// @param [string] $op: encrypt | decrypt
+// --------
+// @return [string]
+
+@function rot13(
+  $message,
+  $op: 'encrypt'
+) {
+  @return caesar($message, 13, $op);
+}
+
+
+// ROT 18 encoder/decoder.
+// --------
+// @param [string] $message
+// @param [string] $op: encrypt | decrypt
+// --------
+// @return [string]
+
+@function rot18(
+  $message,
+  $op: 'encrypt'
+) {
+  $result: rot5($message, $op: $op);
+  $result: rot13($message, $op: $op);
+
+  @return $result;
+}
+
+
+// ROT 47 encoder/decoder.
+// --------
+// @param [string] $message
+// @param [string] $op: encrypt | decrypt
+// --------
+// @return [string]
+
+@function rot47(
+  $message,
+  $op: 'encrypt'
+) {
+  @return caesar($message, 47, $op, ascii);
+}

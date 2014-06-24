@@ -1,0 +1,76 @@
+
+// SassyPher
+// Sass extensions: chars
+// ----------------------
+
+
+// Return a charset string.
+// --------
+// @param [string] $charset
+// --------
+// @return [string]
+
+@function charset(
+  $charset
+) {
+  @return map-get((
+    numeric:
+      '0123456789',
+    alphabetic:
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+    alphanumeric:
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+    ascii:
+      '!"#$%&' + "'" +
+      '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+  ), $charset);
+}
+
+
+// Get char at `$index` in `$str`.
+// --------
+// @param [string] $str
+// @param [number] $index
+// --------
+// @return [string]
+
+@function char-at(
+  $str,
+  $index: 1
+) {
+  @return str-slice($str, $index, $index);
+}
+
+
+// Get char code from `$str` at `$index` in range `$charset`.
+// --------
+// @param [string] $str
+// @param [number] $index
+// @param [string] $charset
+// --------
+// @return [number]
+
+@function char-code-at(
+  $str,
+  $index: 1,
+  $charset: alphabetic
+) {
+  $chars: charset($charset);
+  @return str-index($chars, char-at($str, $index));
+}
+
+
+// Get char at `$index` in range `$charset`.
+// --------
+// @param [number] $index
+// @param [string] $charset
+// --------
+// @return [string]
+
+@function from-char-code(
+  $index,
+  $charset: alphabetic
+) {
+  $chars: charset($charset) or $charset;
+  @return char-at($chars, $index);
+}

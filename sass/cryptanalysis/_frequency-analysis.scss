@@ -1,0 +1,61 @@
+
+
+
+// Relative frequencies of letters in the English language
+
+$standard-frequency: (
+  a: 8.2,   b: 1.5,   c: 2.8,   d: 4.3,
+  e: 12.7,  f: 2.2,   g: 2.0,   h: 6.1,
+  i: 7.0,   j: 0.2,   k: 0.8,   l: 4.0,
+  m: 2.4,   n: 6.7,   o: 7.5,   p: 1.9,
+  q: 0.1,   r: 6.0,   s: 6.3,   t: 9.1,
+  u: 2.8,   v: 1.0,   w: 2.4,   x: 0.2,
+  y: 2.0,   z: 0.1
+);
+
+
+$standard-frequency-ordered: (
+  e: 12.7,   t: 9.1,   a: 8.2,   o: 7.5,
+  i: 7.0,    n: 6.7,   s: 6.3,   h: 6.1,
+  r: 6.0,    d: 4.3,   l: 4.0,   c: 2.8,
+  u: 2.8,    m: 2.4,   w: 2.4,   f: 2.2,
+  g: 2.0,    y: 2.0,   p: 1.9,   b: 1.5,
+  v: 1.0,    k: 0.8,   j: 0.2,   x: 0.2,
+  q: 0.1,    z: 0.1
+);
+
+
+@function get-frequency-table($str) {
+  $frequency: ();
+  $counter: ();
+  $length: str-length($str);
+
+  @for $i from 1 through 26 {
+    $counter: map-merge($counter, (from-char-code($i + 26): 0));
+  }
+
+  @for $i from 1 through $length {
+    $char: to-lower-case(str-slice($str, $i, $i));
+    @if map-has-key($counter, $char) {
+      $counter: map-merge($counter, ($char: map-get($counter, $char) + 1));
+    }
+  }
+
+  @each $char, $count in $counter {
+    $frequency: map-merge($frequency, ($char: $count / $length));
+  }
+
+  @return $frequency;
+}
+
+
+@function index-of-coincidence($frequency) {
+  $idx: 0;
+
+  @for $i from 1 through 26 {
+    $c: from-char-code($i + 26);
+    $idx: $idx + map-get($frequency, $c) * map-get($standard-frequency, $c);
+  }
+
+  @return $idx;
+}

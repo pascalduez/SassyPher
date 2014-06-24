@@ -1,0 +1,40 @@
+
+// SassyPher
+// Sass extensions: binary
+// -----------------------
+
+
+// Convert a 1 bit string to its number equivalent.
+// --------
+// @param [string] $str
+// --------
+// @return [number]
+
+@function bit(
+  $str
+) {
+  @return (str-index('01', str-slice($str, -1)) - 1);
+}
+
+
+// Padd a binary string with zeros.
+// --------
+// @param [string] $bin
+// @param [number] $length
+// --------
+// @return [string]
+
+@function padd(
+  $bin,
+  $length: 4
+) {
+  @if not index((2 4 8 16 32 64), $length) {
+    @return $bin;
+  }
+
+  @while str-length($bin) < $length {
+    $bin: '0' + $bin;
+  }
+
+  @return $bin;
+}

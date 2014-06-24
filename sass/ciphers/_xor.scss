@@ -1,0 +1,43 @@
+
+// SassyPher
+// Cipher: XOR
+// -----------
+
+
+// @function char-code-at($str, $index: 1) {
+//   @return ascii-code(str-slice($str, $index, $index));
+// }
+//
+//
+// @function from-char-code($code) {
+//   @return ascii-char($code);
+// }
+//
+//
+@function key-char-at($key, $index) {
+  @return char-code-at($key, floor($index % str-length($key)));
+}
+
+
+@function xor-encrypt($message, $key) {
+  $result: ();
+
+  @for $i from 1 through str-length($message) {
+    $c: bw(char-code-at($message, $i) '^' key-char-at($key, $i));
+    $result: append($result, $c);
+  }
+
+  @return $result;
+}
+
+
+@function xor-decrypt($message, $key) {
+  $result: '';
+
+  @for $i from 1 through length($message) {
+    $c: bw(nth($message, $i) '^' key-char-at($key, $i));
+    $result: $result + from-char-code($c);
+  }
+
+  @return $result;
+}

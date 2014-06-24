@@ -1,0 +1,100 @@
+
+// SassyPher
+// Sass extensions: positional notation
+// ------------------------------------
+
+
+//
+// --------
+// @param [number] $base
+// --------
+// @return [string]
+
+@function chars-from-base(
+  $base: 10
+) {
+  $chars:(
+    // Binary
+    2: '01',
+    // Octal
+    8: '01234567',
+    // Decimal
+    10: '0123456789',
+    // Hexadecimal
+    16: '0123456789abcdef',
+    // Base 36
+    36: '0123456789abcdefghijklmnopqrstuvwxyz',
+    // Base 64
+    64: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+  );
+
+  @if not map-has-key($chars, $base) {
+    @warn 'There is no base `#{$base}` available.';
+  }
+  @return map-get($chars, $base);
+}
+
+
+//
+// --------
+// @param [number] $num
+// @param [number] $radix
+// --------
+// @return [string]
+
+@function to-string(
+  $num,
+  $radix: 10
+) {
+  $chars: chars-from-base($radix);
+  $result: '';
+  $sign: '';
+
+  @if $num < 0 {
+    $sign: '-';
+    $num: abs($num);
+  }
+
+  @if $num >= 0 and $num < $radix {
+    @return $sign + str-slice($chars, ($num + 1), ($num + 1));
+  }
+
+  $q: $num;
+  @while $q != 0 {
+    $r: $q % $radix;
+    $q: floor($q / $radix);
+    $result: str-slice($chars, ($r + 1), ($r + 1)) + $result;
+  }
+
+  @return $sign + $result;
+}
+
+
+//
+// --------
+// @param [string] $str
+// @param [number] $radix
+// --------
+// @return [string]
+
+@function parse-int(
+  $str,
+  $radix: 10
+) {
+  $chars: chars-from-base($radix);
+  $result: 0;
+
+  $is-negative: str-index($str, '-') == 1;
+
+  @if $is-negative {
+    $str: str-slice($str, 2);
+  }
+
+  @for $i from 1 through str-length($str) {
+    $char: str-slice($str, -$i, -$i);
+    $value: str-index($chars, $char) - 1;
+    $result: $result + ($value * pow($radix, ($i - 1)));
+  }
+
+  @return if($is-negative, -$result, $result);
+}

@@ -1,0 +1,28 @@
+
+@include describe("The Vigenère cipher") {
+  $fixture: (
+    ('attackatdown', 'lemon', 'lxfopvefrbhr'),
+    ('Helmholtzplatz', 'Berlin', 'Iicxpbmxqatnud'),
+    ('Hey! how’s it going ?', 'Amiens', 'Hqg! lbo’s ub kbans ?'),
+    ('Les sanglots longs Des violons Blessent mon cœur D’une langueur Monotone.', 'BBC', 'Mfu tbphmqut npoit Egt wkpmqot Dmfutfpu nqo dœws E’wof nboivfws Nqopvpog.'),
+    ('Punkt, Punkt, Komma, Strich, fertig ist das Mondgesicht.', 'Saßy', 'Hulct, Nmnil, Kmemy, Ktpacf, xeplie asr vaq Eolvgckiazt.')
+  );
+
+  @include it("should correctly encrypt a message") {
+    @each $test in $fixture {
+      $result: vigenere-encrypt(nth($test, 1), nth($test, 2));
+      $expected: nth($test, 3);
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+
+  @include it("should correctly decrypt a message") {
+    @each $test in $fixture {
+      $result: vigenere-decrypt(nth($test, 3), nth($test, 2));
+      $expected: nth($test, 1);
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+}

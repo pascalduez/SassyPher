@@ -1,0 +1,54 @@
+
+// SassyPher
+// Cipher: Caesar
+// --------------
+
+
+// Caesar cipher encoder/decoder.
+// --------
+// @param [string] $message
+// @param [number] $shift
+// @param [string] $op: encrypt | decrypt
+// --------
+// @return [string]
+
+@function caesar(
+  $message,
+  $shift: 1,
+  $op: 'encrypt',
+  $charset: alphabetic
+) {
+  @if type-of($message) != string {
+    @warn '`$message` must be a string, #{type-of($message)} given.';
+  }
+  @if type-of($shift) != number {
+    @warn '`$shift` must be a number, #{type-of($shift)} given.';
+  }
+  @if not in-range(0, 26, abs($shift)) {
+    @warn '`$shift` must in range [0-26].';
+  }
+
+  $result: '';
+
+  @if $op == 'decrypt' {
+   $shift: (26 - $shift);
+  }
+
+  @for $i from 1 through str-length($message) {
+    $code: char-code-at($message, $i);
+
+    @if $code {
+      // Uppercase $col <= 26
+      // Lowercase $col > 26
+      $case: if($code > 26, 27, 1);
+      $shifted: ((($code - $case) + $shift) % 26) + $case;
+      $result: $result + from-char-code($shifted, $charset);
+    }
+    @else {
+      // Non [A-Za-z] char.
+      $result: $result + char-at($message, $i);
+    }
+  }
+
+  @return $result;
+}

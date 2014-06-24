@@ -1,0 +1,39 @@
+
+@include describe("Gray code convertion") {
+  $fixture: (
+     0: ( "bin": "0000", "gray": "0000" ),
+     1: ( "bin": "0001", "gray": "0001" ),
+     2: ( "bin": "0010", "gray": "0011" ),
+     3: ( "bin": "0011", "gray": "0010" ),
+     4: ( "bin": "0100", "gray": "0110" ),
+     5: ( "bin": "0101", "gray": "0111" ),
+     6: ( "bin": "0110", "gray": "0101" ),
+     7: ( "bin": "0111", "gray": "0100" ),
+     8: ( "bin": "1000", "gray": "1100" ),
+     9: ( "bin": "1001", "gray": "1101" ),
+    10: ( "bin": "1010", "gray": "1111" ),
+    11: ( "bin": "1011", "gray": "1110" ),
+    12: ( "bin": "1100", "gray": "1010" ),
+    13: ( "bin": "1101", "gray": "1011" ),
+    14: ( "bin": "1110", "gray": "1001" ),
+    15: ( "bin": "1111", "gray": "1000" )
+  );
+
+  @include it("should correctly convert binary to Gray code") {
+    @each $num, $data in $fixture {
+      $result: padd(binary-to-gray(map-get($data, "bin")));
+      $expected: map-get($data, "gray");
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+
+  @include it("should correctly convert Gray code to binary") {
+    @each $num, $data in $fixture {
+      $result: gray-to-binary(map-get($data, "gray"));
+      $expected: map-get($data, "bin");
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+}

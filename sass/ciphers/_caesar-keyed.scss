@@ -1,0 +1,25 @@
+
+// SassyPher
+// Cipher: caesar keyed
+// --------------------
+
+
+// Caesar keyyed cipher encoder/decoder.
+// --------
+// @param [string] $message
+// @param [string] $key
+// @param [number] $shift
+// @param [string] $op: encrypt | decrypt
+// --------
+// @return [string]
+
+@function caesar-keyed(
+  $message,
+  $key,
+  $shift: 1,
+  $op: 'encrypt'
+) {
+  $charset: keyed-alpha($key);
+
+  @return caesar($message, $shift, $op, $charset);
+}

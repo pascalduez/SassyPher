@@ -1,0 +1,26 @@
+
+@include describe("The ROT 13 cipher") {
+  $fixture: (
+    ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'),
+    ('ROT 13 cipher', 'EBG 13 pvcure'),
+    ('Let’s get Saßy !', 'Yrg’f trg Fnßl !')
+  );
+
+  @include it("should correctly encrypt a message") {
+    @each $test in $fixture {
+      $result: rot13(nth($test, 1));
+      $expected: nth($test, 2);
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+
+  @include it("should correctly decrypt a message") {
+    @each $test in $fixture {
+      $result: rot13(nth($test, 2), 'decrypt');
+      $expected: nth($test, 1);
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+}

@@ -1,0 +1,26 @@
+
+@include describe("Morse code convertion") {
+  $fixture: (
+    'berlin': '-... . .-. .-.. .. -.',
+    'amiens': '.- -- .. . -. ...',
+    'sass all the things !': '... .- ... ... / .- .-.. .-.. / - .... . / - .... .. -. --. ... / -.-.--'
+  );
+
+  @include it("should correctly convert plaintext to Morse code") {
+    @each $plain, $morse in $fixture {
+      $result: morse-encode($plain);
+      $expected: $morse;
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+
+  @include it("should correctly convert Morse code to plaintext") {
+    @each $plain, $morse in $fixture {
+      $result: morse-decode($morse);
+      $expected: $plain;
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+}

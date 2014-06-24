@@ -1,0 +1,56 @@
+// -----------------------------------------------------------------------------
+// SassyPher – A Sass cryptography experiment
+// -----------------------------------------------------------------------------
+// Repository: https://github.com/pascalduez/SassyPher
+// -----------------------------------------------------------------------------
+
+//
+// Import vendors extensions
+//
+@import "SassyBitwise";
+
+//
+// Import helpers
+//
+@import "helpers/functions";
+@import "helpers/strings";
+@import "helpers/lists";
+@import "helpers/maps";
+@import "helpers/keys";
+
+//
+// Import extend
+//
+@import "extend/chars";
+@import "extend/ascii";
+@import "extend/math";
+@import "extend/positional-notation";
+@import "extend/binary";
+
+//
+// Import ciphers
+//
+@import "ciphers/caesar";
+@import "ciphers/caesar-keyed";
+@import "ciphers/rot";
+@import "ciphers/vigenere";
+@import "ciphers/vigenere-keyed";
+@import "ciphers/vigenere-autokey";
+@import "ciphers/xor";
+
+//
+// Import codes
+//
+@import "codes/morse";
+
+//
+// Import convertions
+//
+@import "convertions/gray-code";
+
+//
+// Import cryptanalysis
+//
+@import "cryptanalysis/letter-frequency";
+@import "cryptanalysis/frequency-analysis";
+@import "cryptanalysis/brute-force";

@@ -1,0 +1,29 @@
+
+// SassyPher
+// Sass extensions: math
+// ---------------------
+
+
+// Returns the `$base` to the `$exponent` Power.
+// --------
+// @param [number] $base
+// @param [number] $exponent
+// --------
+// @return [number]
+
+@function pow($base, $exponent) {
+  $result: 1;
+
+  @if $exponent > 0 {
+    @for $i from 1 through $exponent {
+      $result: $result * $base;
+    }
+  }
+  @else {
+    @for $i from $exponent to 0 {
+      $result: $result / $base;
+    }
+  }
+
+  @return $result;
+}

@@ -1,0 +1,30 @@
+
+// SassyPher
+// Helpers: lists
+// --------------
+
+
+// Shift list of `$value` in direction `$dir`.
+// --------
+// @param [list] $list: input list
+// @param [number] $value: shift value
+// @param [string] $dir: shift direction
+// --------
+// @return [list]
+
+@function shift(
+  $list,
+  $value: 1,
+  $dir: 'right'
+) {
+  $length: length($list);
+  $result: ();
+
+  @for $i from 0 to $length {
+    $pos: if($dir == 'right', ($i + $value), ($i - $value));
+    $pos: $pos % $length + 1;
+    $result: append($result, nth($list, $pos), list-separator($list));
+  }
+
+  @return $result;
+}

@@ -1,0 +1,45 @@
+@import "bootcamp";
+@import "SassyPher";
+
+@include runner-start;
+
+//
+// Import helpers
+//
+// @import "../specs/helpers/maps";
+
+//
+// Import extend
+//
+// @import "../specs/extend/chars";
+// @import "../specs/extend/ascii";
+// @import "../specs/extend/math";
+// @import "../specs/extend/positional-notation";
+
+//
+// Import ciphers
+//
+@import "../specs/ciphers/caesar";
+@import "../specs/ciphers/caesar-keyed";
+@import "../specs/ciphers/rot";
+@import "../specs/ciphers/vigenere";
+@import "../specs/ciphers/xor";
+
+//
+// Import codes
+//
+@import "../specs/codes/morse";
+
+//
+// Import convertions
+//
+@import "../specs/convertions/gray-code";
+
+//
+// Import cryptanalysis
+//
+// @import "../specs/cryptanalysis/letter-frequency";
+// @import "../specs/cryptanalysis/frequency-analysis";
+// @import "../specs/cryptanalysis/brute-force";
+
+@include runner-end;

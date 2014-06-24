@@ -1,0 +1,28 @@
+
+@include describe("The caesar cipher") {
+  $fixture: (
+    ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 13, 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'),
+    ('Caesar cipher', 1, 'Dbftbs djqifs'),
+    ('Caesar cipher', 3, 'Fdhvdu flskhu'),
+    ('Caesar cipher', 5, 'Hfjxfw hnumjw'),
+    ('Caesar cipher', -6, 'Wuymul wcjbyl')
+  );
+
+  @include it("should correctly encrypt a message") {
+    @each $test in $fixture {
+      $result: caesar(nth($test, 1), nth($test, 2));
+      $expected: nth($test, 3);
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+
+  @include it("should correctly decrypt a message") {
+    @each $test in $fixture {
+      $result: caesar(nth($test, 3), nth($test, 2), 'decrypt');
+      $expected: nth($test, 1);
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+}

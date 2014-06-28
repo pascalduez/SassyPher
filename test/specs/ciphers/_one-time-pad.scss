@@ -1,0 +1,28 @@
+
+
+@include describe("The one-time pad cipher") {
+  $fixture: (
+    ('Hello', 'xmckl', 'Eqnvz'),
+    ('Berlin Amiens', 'ghulbtecgunz', 'Hllwjg Eooyar'),
+    ('Gilbert Vernam', 'ldiruanghzydb', 'Rltsyrg Blqldn'),
+    ('Frank Miller', 'meidnzusdlr', 'Rviqx Lcdopi')
+  );
+
+  @include it("should correctly encrypt a message") {
+    @each $test in $fixture {
+      $result: otp(nth($test, 1), nth($test, 2));
+      $expected: nth($test, 3);
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+
+  @include it("should correctly decrypt a message") {
+    @each $test in $fixture {
+      $result: otp(nth($test, 3), nth($test, 2), 'decrypt');
+      $expected: nth($test, 1);
+
+      @include should(expect($result), to(be($expected)));
+    }
+  }
+}

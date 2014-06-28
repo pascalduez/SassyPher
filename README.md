@@ -28,6 +28,7 @@ What would be releveant to add to the language and what not.
 * [Vigenère](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher)
 * Vigenère keyed
 * [Vigenère autokey](https://en.wikipedia.org/wiki/Autokey_cipher)
+* [One-time pad](https://en.wikipedia.org/wiki/One-time_pad)
 * [XOR](https://en.wikipedia.org/wiki/XOR_cipher)
 
 

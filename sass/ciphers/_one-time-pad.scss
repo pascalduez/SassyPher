@@ -1,0 +1,48 @@
+
+// SassyPher
+// Cipher: One-time pad
+// --------------------
+
+
+// One-time pad encoder/decoder.
+// --------
+// @param {string} $message
+// @param {number} $shift
+// @param {string} $op ('encrypt'): encrypt | decrypt
+// --------
+// @return {string}
+
+@function otp(
+  $message,
+  $key,
+  $op: 'encrypt'
+) {
+  $key: str-filter(to-upper-case($key));
+  $result: '';
+
+  @if str-length($key) < str-length(str-filter($message)) {
+    @warn 'Key length should be at least as long as message length.';
+  }
+
+  $j: 1;
+  @for $i from 1 through str-length($message)  {
+    $c: char-code-at($message, $i);
+    $k: char-code-at($key, $j);
+
+    @if $c {
+      // Uppercase $c <= 26
+      // Lowercase $c > 26
+      $case: if($c > 26, 26, 0);
+      $padded: if($op == 'encrypt', ($c + $k - 2), ($c - $k));
+      $padded: (($padded - $case) % 26) + $case + 1;
+      $result: $result + from-char-code($padded);
+      $j: $j + 1;
+    }
+    @else {
+      // Non [A-Za-z] char.
+      $result: $result + char-at($message, $i);
+    }
+  }
+
+  @return $result;
+}

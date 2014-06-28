@@ -34,8 +34,9 @@
 @import "ciphers/caesar-keyed";
 @import "ciphers/rot";
 @import "ciphers/vigenere";
-@import "ciphers/vigenere-keyed";
-@import "ciphers/vigenere-autokey";
+// @import "ciphers/vigenere-keyed";
+// @import "ciphers/vigenere-autokey";
+@import "ciphers/one-time-pad";
 @import "ciphers/xor";
 
 //

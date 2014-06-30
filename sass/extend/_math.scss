@@ -6,10 +6,10 @@
 
 // Returns the `$base` to the `$exponent` Power.
 // --------
-// @param [number] $base
-// @param [number] $exponent
+// @param {number} $base
+// @param {number} $exponent
 // --------
-// @return [number]
+// @return {number}
 
 @function pow($base, $exponent) {
   $result: 1;
@@ -26,4 +26,99 @@
   }
 
   @return $result;
+}
+
+
+// Returns the square root of a number.
+// ---
+// @param {Number} $n
+// ---
+// @return {number}
+
+@function sqrt($n) {
+  @if $n < 0 {
+    @warn "#{$n} is not a positive number for `sqrt`.";
+    @return null;
+  }
+
+  $ret: 1;
+  @for $i from 1 through 24 {
+    $ret: $ret - (pow($ret, 2) - $n) / (2 * $ret);
+  }
+
+  @return $ret;
+}
+
+
+// Returns the factorial of a non-negative integer.
+// ---
+// @param {number} $n: a non-negative integer
+// ---
+// @return {number}
+
+@function fact($n) {
+  @if $n < 0 or  $n != floor($n) {
+    @warn "#{$n} is not a positive integer for `fact`.";
+    @return null;
+  }
+
+  $ret: 1;
+  @while $n > 0 {
+    $ret: $ret * $n;
+    $n: $n - 1;
+  }
+
+  @return $ret;
+}
+
+
+// Returns whether `$n` is a prime number.
+// ---
+// @param {number} $n
+// ---
+// @return {bool}
+
+@function is-prime($n) {
+  @if type-of($n) != number {
+    @warn "#{$n} is not a number for `is-prime`.";
+    @return null;
+  }
+
+  @if $n < 2 or $n != floor($n) {
+    @return false;
+  }
+
+  @if $n % 2 == 0 { @return $n == 2; }
+  @if $n % 3 == 0 { @return $n == 3; }
+
+  $i: 5;
+  $m: ceil(sqrt($n));
+  @while $i <= $m {
+    @if $n % $i == 0 or $n % ($i + 2) == 0 {
+      @return false;
+    }
+    $i: $i + 6;
+  }
+
+  @return true;
+}
+
+
+// Returns whether `$n` is a prime number.
+// ---
+// @param {number} $n
+// ---
+// @return {bool}
+
+@function __is-prime($n) {
+  @if type-of($n) != number {
+    @warn "#{$n} is not a number for `is-prime`.";
+    @return null;
+  }
+
+  @if $n < 2 or $n != floor($n) {
+    @return false;
+  }
+
+  @return fact($n - 1) % $n == $n - 1;
 }

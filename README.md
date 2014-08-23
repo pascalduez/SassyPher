@@ -14,7 +14,7 @@ But some interesting goals:
 * Try to push Sass limits further and draw the line
 between what would make sense to implement in Sass or not.
 What would be releveant to add to the language and what not.
-* Did I already said have fun ?
+* Did I mentionned have fun ?
 
 
 ## Ciphers

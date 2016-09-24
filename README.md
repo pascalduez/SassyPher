@@ -55,7 +55,7 @@ What would be releveant to add to the language and what not.
 
 ## Authors
 
-[Pascal Duez](http://pascalduez.me)
+[Pascal Duez](https://github.com/pascalduez)
 
 
 ## Licence
